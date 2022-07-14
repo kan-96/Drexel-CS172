@@ -1,0 +1,77 @@
+# Class: Cs 172
+# Author: Khoa Nguyen
+import datetime
+class Item:
+    def __init__(self,__name = 'None', __price = 0.00, __taxable = False):
+        self.__name = __name
+        self.__price = __price
+        self.__taxable = __taxable
+    def __str__(self):
+        price = "{:.2f}".format(self.__price)
+        return "{:_<20}".format(self.__name)+"{:_>20}".format(price)
+    def getPrice(self):
+        return self.__price
+    def getTax(self, tax_rate):
+        tax = 0.00
+        if self.__taxable:
+            tax = (self.__price*tax_rate)
+        return tax
+
+class Receipt:
+
+
+    def __init__(self, tax_rate=0.07):
+        self.__tax_rate = tax_rate
+        self.__purchase = []
+    def addItem(self,item):
+        self.__purchase.append(item)
+    def __str__(self):
+        reciept = ("----- Receipt " + str("time")+" -----\n")
+        sub_total = 0.00
+        total_tax = 0.00
+        for item in self.__purchase:
+            reciept += str(item)+"\n"
+            sub_total += item.getPrice()
+            total_tax += item.getTax(self.__tax_rate)
+        total_grand = "{:.2f}".format(total_tax+sub_total)
+        sub_total = "{:.2f}".format(sub_total)
+        total_tax = "{:.2f}".format(total_tax)
+        reciept += "\n"
+        reciept += "{:_<20}".format("Sub Total")+"{:_>20}\n".format(sub_total)
+        reciept += "{:_<20}".format("Tax")+"{:_>20}\n".format(total_tax)
+        reciept += "{:_<20}".format("Total")+"{:_>20}\n".format(total_grand)
+        return reciept
+
+#Main Program
+if __name__=="__main__":
+    reciept = Receipt()
+    print("Welcome to Receipt Creator")
+    item_name = input("Enter Item name: ")
+    item_price= float(input("Enter Item Price: "))
+
+    item_taxable = input("Is the item taxable (yes/no): ")
+    if (item_taxable == "yes"):
+        item_taxable = True
+    else:
+        item_taxable = False
+
+    item = Item(item_name, item_price, item_taxable)
+    reciept.addItem(item)
+
+    add_item = input("Add another item (yes/no): ")
+    while add_item == "yes":
+        item_name = input("Enter Item name: ")
+        item_price= float(input("Enter Item Price: "))
+        item_taxable = input("Is the item taxable (yes/no): ")
+        if (item_taxable == "yes"):
+            item_taxable = True
+        else:
+            item_taxable = False
+        item = Item(item_name, item_price, item_taxable)
+        reciept.addItem(item)
+        add_item = input("Add another item (yes/no): ")
+    print(reciept)
+
+
+
+
