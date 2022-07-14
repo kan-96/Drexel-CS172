@@ -1,0 +1,60 @@
+# Class: CS 172
+# Author: Khoa Nguyen
+class Birthday():
+    def __init__ (self, bday, bmonth,byear):
+        self.bday = bday
+        self.bmonth = bmonth
+        self.byear = byear
+
+    def __str__(self):
+        str = str(self.bmonth) + "/" + str(self.bday) + "/" + str(self.byear)
+        return str
+
+    def getBday(self):
+        return self.bday
+
+    def setBday(self,d):
+        self.bday = d
+
+    def getBmonth(self):
+        return self.bmonth
+
+    def setBmonth(self, m):
+        self.bmonth = m
+
+    def getByear(self):
+        return self.byear
+
+    def setByear(self,y):
+        self.byear = y
+
+    def __hash__(self):
+        total = int(self.bmonth) + int(self.byear) + int(self.bday)
+        mod = total % 12
+        return mod
+
+    def __eq__(self, other):
+        date = self.bday == other.getBday()
+        month = self.bmonth == other.getBmonth()
+        year = self.byear == other.getByear()
+        return (date and month and year)
+*****************************************************************************************
+from Birthday import Birthday
+
+hashTable = []
+for i in range(12):
+    hashTable.append([])
+
+birthday_file = open("birthday.txt", "r")
+lines = birthday_file.readlines()
+count =0
+for l in lines:
+    count += 1
+    month, date, year = l.split('/')
+    birth_day = Birthday(date, month, year)
+    index = birth_day.__hash__()
+    hashTable[index].append((birth_day, str(count)))
+birthday_file.close()
+
+for item in range(12):
+    print('Hash location', item, 'has', len(hashTable[item]), 'elements in it')
