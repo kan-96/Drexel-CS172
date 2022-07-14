@@ -1,0 +1,63 @@
+# Class: Cs 172
+# Author: Khoa Nguyen
+class Stack:
+    # Create a New Empty Stack
+    def __init__(self):
+        self.__S = []
+
+    # Display the Stack
+    def __str__(self):
+        return str(self.__S)
+
+    # Add a new element to top of stack
+    def push(self, x):
+        self.__S.append(x)
+
+    # Remove the top element from stack
+    def pop(self):
+        return self.__S.pop()
+
+    # See what element is on top of stack
+    # Leaves stack unchanged
+    def top(self):
+        return self.__S[-1]
+
+    def isEmpty(self):
+        return len(self.__S) == 0
+
+
+word_in = input("Enter a single word(or q to quit): ")
+stack = Stack()
+while word_in != "q":
+
+    for i in word_in:
+        stack.push(i)
+    word_out = ""
+    while not stack.isEmpty():
+        word_out += stack.pop()
+    if word_out == word_in:
+        print("This word is a palindrome.\n")
+    else:
+        print("This this not a palindrome.\n")
+    word_in = input("Enter a single word: ")
+print ("Good bye!")
+************************************************************************************************
+from stackclass import Stack
+
+if __name__ == "__main__":
+    print("Welcome to Postfix Calculator\n")
+    print("Enter exit to quit\n")
+    str_input = input("Enter Expression\n")
+    stack = Stack()
+    while str_input != "exit":
+
+        for i in str_input.split(" "):
+            if i.strip("-").isdigit():
+                stack.push(i)
+            else:
+                a2 = stack.pop()
+                a1 = stack.pop()
+                stack.push(str(eval(a1 + i + a2)))
+        result = float(stack.pop())
+        print("Result: {}".format(result))
+        str_input = input("Enter Expression\n")
