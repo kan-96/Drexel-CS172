@@ -1,3 +1,6 @@
+//Class:CS 172
+//Author: Khoa Nguyen
+
 class Triangle:
     def __init__(self):
         self.base = 0
